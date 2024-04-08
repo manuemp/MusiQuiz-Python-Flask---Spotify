@@ -1,0 +1,447 @@
+body, html{
+    height: fit-content;
+    min-height: 100vh;
+}
+
+body{
+    font-family: 'Helvetica Neue';
+    padding: 0px;
+    margin: 0px;
+    background: linear-gradient(#212529 40%, black );
+}
+
+.title{
+    text-align: center;
+    color: white;
+    padding: 20px;
+    margin-top: 0px;
+}
+
+#main{
+    min-height: 100vw;
+}
+
+.login-title{
+    color: #ffc354;
+    text-shadow: 2px 2px magenta;
+    padding: 20px;
+    text-align: center;
+    font-size: 45px;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    min-width: 100vw;
+    padding-top: 10px;
+}
+
+.item:hover{
+    background-color: seagreen;
+    transition: 0.5s;
+}
+
+.item-submit{
+    background-color: dodgerblue;
+    border: none;
+    display: block;
+    margin: 5px auto;
+}
+
+.item-submit:hover{
+    background-color: rgb(22, 109, 196);
+    transition: 0.5s;
+}
+
+.form{
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+    width: 40%;
+    margin: 50px auto;
+}
+
+.yellowpink{
+    color: yellow;
+    text-shadow: 2px 2px hotpink;
+}
+
+.form-submit{
+    width: 50%;
+    background-color:dodgerblue;
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.checker{
+    padding: 10px;
+    text-align: center;
+    border-radius: 20px;
+    color: white;
+    width: 400px;
+    margin-bottom: 10px;
+    margin: 5px auto;
+}
+
+input[type=radio]{
+    display: none;
+}
+
+input[type=radio]:checked + label {
+    background-color: palegreen;
+    color: green;
+}
+
+label {
+    display: inline-block;
+    border-radius: 10px;
+    width: 100%;
+}
+
+/* .login-info{
+    text-align: center;
+    display: block;
+    cursor:default;
+    color: lightslategray;
+    font-style: italic;
+} */
+
+.value-input{
+    background-color:initial;
+    border: none;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.value-input:focus{
+    outline: none;
+}
+
+.input-td{
+    text-align: center;
+}
+
+/* -------------------------------------------- */
+            /* BOOTSTRAP MODIFIED */
+/* -------------------------------------------- */
+
+.container-fluid{
+    justify-content: start !important;
+}
+
+a:hover{
+    color: white !important;
+    text-shadow: 1.5px 1px dodgerblue;
+    transition: 0.5s;
+}
+
+.navbar-brand{
+    font-size: 16px !important;
+}
+
+.navbar-toggler{
+    border: none !important;
+}
+
+.progress{
+    height: 35px !important;
+    width: 60% !important;
+    margin: 30px auto !important;
+    background: linear-gradient(45deg, tomato, red);
+    border: 2px solid black;
+}
+
+.progress-bar{
+    font-weight: bold;
+}
+
+#stats-link{
+    color: gold;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+}
+
+/* -------------------------------------------- */
+                    /* INFO */
+/* -------------------------------------------- */
+
+.info-div{
+    color: white;
+    width: 100vw;
+    font-size: 2vw;
+    padding: 0 10vw;
+    margin: auto;
+}
+
+#imp-link{
+    text-decoration: none;
+    color: red;
+    font-weight: bold;
+}
+
+#logout-link{
+    color: slategray;
+    position: absolute;
+    right: 80px;
+    top: 8px;
+}
+
+/* -------------------------------------------- */
+                    /* STATS */
+/* -------------------------------------------- */
+
+.stats-txt{
+    font-size: 2vw;
+}
+
+#stats-table{
+    font-weight: bold;
+    height: inherit;
+    width: 70%;
+    margin: 30px auto;
+    font-size: 24px;
+}
+
+#stats-table td{
+    color: white;
+    text-shadow: none;
+    text-align: center;
+}
+
+#stats{
+    padding: 0px 20px;
+    background: linear-gradient(45deg, tomato, #fac35f);
+    width: 300px;
+    height: 400px;
+    position: absolute;
+    border-radius: 0px 0px 25px 25px;
+    right: 0px;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+    box-shadow: -4px 12px 20px 0px black;
+}
+
+/* -------------------------------------------- */
+                    /* ArtistQuiz */
+/* -------------------------------------------- */
+
+.slide-form{
+    width: 500px;
+    display: block;
+    height: fit-content;
+}
+
+.slide-form tbody, td, tr{
+    width: inherit;
+}
+
+.item, .item-submit{
+    background-color: #212529;
+    padding: 10px;
+    text-align: center;
+    border-radius: 20px;
+    color: white;
+    width: 80%;
+    margin-bottom: 10px;
+    margin: 5px auto;
+}
+
+.answer{
+    border: 2px solid black;
+}
+
+.quiz-title{
+    color: yellow;
+    text-shadow: 2px 2px hotpink;
+    text-align: center;
+}
+
+.quiz-span{
+    color: palegreen;
+    font-weight: bold;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 3px;
+    border-radius: 50%;
+    background-color: black;
+}
+
+.image, .form-image{
+    box-shadow: 3px 3px 6px 1px #333;
+    border-radius: 20px;
+}
+
+.image{
+    height: 200px;
+    width: auto;
+    box-shadow: 1px 1px 26px -5px lightyellow;
+}
+
+.form-image{
+    height: 170px;
+    width: auto;
+    text-align: center;
+    margin: 10px auto;
+    display: block;
+}
+
+.header{
+    position: fixed;
+    background-color: inherit;
+    padding-bottom: 20px;
+    z-index: 1;
+}
+
+.prev-button, .next-button{
+    width: 40px;
+    height: auto;
+    position: relative;
+    top: 44%;
+    cursor: pointer;
+}
+
+.img-grid{
+    width: 100px;
+    height: auto;
+    border-radius: 10px;
+    margin: 10px auto;
+    text-align:center;
+}
+
+.form-input{
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    width: 90%;
+    cursor: pointer;
+}
+
+.form-input:focus{
+    outline: none;
+    background-color: rgb(202, 228, 255);
+    transition: 0.2s;
+    border: 2px solid dodgerblue;
+}
+
+.results-table{
+    margin: 5px auto;
+    color: white;
+    width: 80%;
+}
+
+.results-table td{
+    text-align: center;
+    padding: 2px;
+    width: 50%;
+}
+
+/* -------------------------------------------- */
+        /* ListenersQuiz & StreamsQuiz */
+/* -------------------------------------------- */
+
+
+.quiz-div{
+    color: white; 
+    margin: 50px auto; 
+    padding: 20px; 
+    border: 2px solid black; 
+    border-radius: 10px;
+    width: 70%;
+    background: linear-gradient(slategray, #95169533 54%);
+}
+
+.listeners{
+    background: linear-gradient(salmon, hotpink 54%);
+}
+/* -------------------------------------------- */
+                /* Search */
+/* -------------------------------------------- */
+                
+.search-input{
+    background-color: #fbf7e1;
+}
+
+.search-input:focus{
+    box-shadow: 2px 2px 40px -10px dodgerblue;
+    transition: 1s;
+    color: dodgerblue;
+    font-weight: bold;
+}
+
+.search-info{
+    min-width: 100vw;
+    text-align: center;
+    text-decoration: underline;
+    color: dodgerblue;
+    display: block;    
+    font-weight: bold;
+    font-style: italic;
+    margin-top: 10px;
+    cursor:default;
+}
+
+/* -------------------------------------------- */
+                /* Media Queries */
+/* -------------------------------------------- */
+
+@media (max-width: 700px){
+    .form{
+        width: 60%;
+    }
+}
+
+@media (min-width: 1000px){
+    .quiz-div{
+        width: 50%;
+    }
+    .item-submit{
+        width: 35%;
+    }
+}
+
+@media (max-width: 425px){
+    .info-div{
+        font-size: 5vw;
+    }
+    .stats-txt{
+        font-size: 4.5vw;
+    }
+    .navbar-toggler{
+        margin-left: -16px;
+    }
+    .image{
+        height: 60vw;
+        width: auto;
+    }
+    form.container {
+        margin-bottom: 8vw;
+    }
+    .search-input::placeholder{
+        font-size: 10px;
+    }
+    .search-input{
+        font-weight: normal;
+    }
+    .prev-button, .next-button{
+        width: 8vw;
+    }
+}
+
+@media (min-width: 2000px){
+    #search-title{
+        margin-top: 40px;
+        font-size: 70px;
+    }
+}

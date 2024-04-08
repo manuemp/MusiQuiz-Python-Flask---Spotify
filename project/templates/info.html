@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block title %}MusiQuiz: Info{% endblock %}
+{% block content %}
+
+<h1 class="title yellowpink">Hello! This is MusiQuiz</h1>
+
+<div class="info-div">
+    <p>
+        
+       In this game, you will be connected to the Spotify databases to 
+       make quizes about any artist or group you like. (<a href="#important" id="imp-link">important clarification</a>) <br><br>
+    
+       There are three types of quizes: <br><br>
+       - <span class="yellowpink">ArtistQuiz</span>: In this quiz, you will search any artists/groups you like, and test
+       how much you know about their songs, albums, etc. <br><br>
+
+       The artistQuiz has two basic conditions: <br>
+       1. The name of the artist/group has to be inputted with some precission. If the name
+       is not properly written, or if the artist is not in Spotify, the Quiz will not be able. <br>
+       2. The artist/group must have at least 4 albums. This is because the quiz always makes questions
+       about 4 different albums (randomly choosen). If the artist/group does not have enough albums, 
+       then the Quiz will be incomplete. <br><br>
+
+       - <span class="yellowpink">StreamsQuiz</span>: This quiz makes 5 groups of 4 artists, and you will have to choose for each group
+       the artist/group with more total streams in Spotify. Total streams refer to how many times any of the 
+       artist/group songs have been played by users. The artists shown in this quiz are on the Spotify's global top 150. <br><br>
+
+       - <span class="yellowpink">ListenersQuiz</span>: Same as in StreamsQuiz, but with one important difference, you will have to guess which
+       of the artists has more monthly listeners. For your surprise, the results may be considerably different from
+       the StreamsQuiz. <br><br><br>
+
+       For all quizes your results will be saved, in order to show how accurate you are along the game!
+       <br><br>
+
+       <h2><span style="color: tomato; text-shadow: 1px 1px red;" id="important">Important!</span></h2>
+       In order to connect to the Spotify databases and play, you must log in with your actual Spotify account. <span style="color: yellow;">Absolutely none</span> of your private data will be endangered, because the Spotify API does not provide important user data, 
+       only public information is provided, such as the username, ID, playlists, etc (all of which can be accessible from the Spotify app without much effort). <br>
+       To log in you will be redirected to Spotify's official Login page, and then redirected to MusiQuiz.
+       <br><br>
+
+       Hope you enjoy it! Thanks for playing! <br><br>
+
+    </p>
+</div>
+
+{% endblock %}

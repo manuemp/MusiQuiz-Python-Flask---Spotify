@@ -1,0 +1,187 @@
+{% extends "layout.html" %}
+{% block title %}Quiz: {{ name }} {% endblock %}
+{% block bodyid %}artistQuiz{% endblock %}
+{% block content %}
+    <h2 class="title yellowpink">
+        {{ name }}
+    </h2>
+    <br>
+    <div class="container">
+        <div><img class="image" src="{{ img }}" alt=""></div>
+    </div>   
+
+    <br>
+    <form class="container" action="/artistResults" method="post">
+        <div style="width: 40px;">
+            <img class="prev-button" src="{{url_for('static', filename='imgs/left-arrow2.png')}}" alt="">
+        </div>
+
+
+        <table id="1" class="slide-form">
+            <tr>
+                <td>
+                    <h3 class="quiz-title">How many users follow this artist?</h3>
+                </td>
+            </tr>
+            {% for follower in followers %}
+            <tr>
+                <td>
+                    <div class="item">
+                        <input type="radio" value="{{ follower }}" name="radio1" id="{{ follower }}1">
+                        <label for="{{ follower }}1">{{ follower }}</label>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+        <table id="2" class="slide-form">
+            <tr class="slide-tr">
+                <td>
+                    <h3 class="quiz-title">Which is the artist's most popular song nowadays?</h3>
+                </td>
+            </tr>
+            {% for song in top_songs  %}
+                <tr>
+                    <td>
+                        <div class="item">
+                            <input type="radio" value="{{ song }}" name="radio2" id="{{ song }}2">
+                            <label for="{{ song }}2">{{ song }}</label>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+        </table>
+
+
+        <table id="3" class="slide-form">
+            <tr>
+                <td>
+                    <h3 class="quiz-title">When was this album released?</h3>
+                </td>
+            </tr>
+            <tr>
+                <td><img class="form-image" src="{{ questions_dict[0].img }}" alt=""></td>
+            </tr>
+            <tr>
+                <td class="input-td"><input type="text" class="form-input" name="input-1" id="input-3" required></td>
+            </tr>
+        </table>
+
+
+        <table id="4" class="slide-form">
+            <tr>
+                <td>
+                    <h4 class="quiz-title">How many tracks does this album have?</h4>
+                </td>
+            </tr>
+            <tr>
+                <td><img class="form-image" src="{{ questions_dict[1].img }}" alt=""></td>
+            </tr>
+            <tr>
+                <td class="input-td"><input type="text" class="form-input" name="input-2" required></td>
+            </tr>
+        </table>
+
+        
+        <table id="5" class="slide-form">
+            <tr class="slide-tr">
+                <td>
+                    <h3 class="quiz-title">Which song is from '{{ questions_dict[2].name }}'?</h3>
+                </td>
+            </tr>
+            {% for track in questions_dict[2].tracks  %}
+            <tr>
+                <td>
+                    <div class="item">
+                        <input type="radio" value="{{ track }}" name="radio3" id="{{ track }}4">
+                        <label for="{{ track }}4">{{ track }}</label>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+        <table id="6" class="slide-form">
+            <tr class="slide-tr">
+                <td>
+                    <h3 class="quiz-title">From which album is '{{ questions_dict[3].track }}'?</h3>
+                </td>
+            </tr>
+            {% for album in questions_dict[3].albums  %}
+            <tr>
+                <td>
+                    <div class="item">
+                        <input type="radio" value="{{ album }}" name="radio4" id="{{ album }}5">
+                        <label for="{{ album }}5">{{ album }}</label>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+        <table id="7" class="slide-form">
+            <tr class="slide-tr">
+                <td>
+                    <h3 class="quiz-title">From which album is '{{ questions_dict[4].track }}'?</h3>
+                </td>
+            </tr>
+            {% for album in questions_dict[4].albums  %}
+            <tr>
+                <td>
+                    <div class="item">
+                        <input type="radio" value="{{ album }}" name="radio5" id="{{ album }}6">
+                        <label for="{{ album }}6">{{ album }}</label>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <table id="8" class="slide-form">
+            <tr>
+                <td>
+                    <h3 class="quiz-title">Who has more followers?</h3>
+                    <br><br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="item">
+                        <input type="radio" value="{{ name }}" name="radio6" id="{{ name }}8">
+                        <label for="{{ name }}8">{{ name }}</label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="item">
+                        <input type="radio" value="{{ related_dict.name }}" name="radio6" id="{{ related_dict.name }}8">
+                        <label for="{{ related_dict.name }}8">{{ related_dict.name }}</label>
+                    </div>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="submit" class="item-submit">Submit</button>
+                </td>
+            </tr>
+        </table>    
+
+        <div style="width: 40px;">
+            <img class="next-button" src="{{url_for('static', filename='imgs/right-arrow2.png')}}" alt="">
+        </div>
+        
+    </form>
+
+    <div class="search-info" style="margin-bottom: 3vw;">
+        Information provided by Spotify API
+    </div>
+{% endblock %}
+{% block script %}
+<script src="{{url_for('static', filename='script.js')}}"></script>
+{% endblock %}

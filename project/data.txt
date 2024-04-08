@@ -1,0 +1,37 @@
+
+CORREGIR:
+## Dos canciones de un mismo álbum en pregunta 4
+## Si el artista no tiene 4 álbumes como mínimo, redirecciono a una página 
+de error. 
+
+Ver si el artista está en el top 50. 
+    Podría hacer una página aparte para los que estén en el top.
+    El usuario los escribe o armo un select?
+
+En caso de que esté:
+    Ver cuál tiene más seguidores (con opciones)
+    Cuántas canciones tiene en el top?
+    La canción "x" en qué puesto está?
+
+Preguntas generales:
+    Número de seguidores - LISTO
+    Año de lanzamiento de un álbum - LISTO
+    Cuál es la canción más popular del artista actualmente - LISTO
+    Cuántas canciones tiene un álbum (tiene que ser álbum, no single) - LISTO
+    Cuál de las canciones es de un álbum? LISTO
+    De cuál de 4 álbumes es la canción? LISTO
+    Quién tiene más seguidores, el artista o un artista relacionado? LISTO
+    Cuál de los álbumes es el más viejo (Entre el del artista y otro relacionado)? 
+
+Crear usuario
+Por cada usuario, crear un historial de cada quiz, con su resultado
+Generar un conteo de los quiz de cada artista a medida que se va buscando nuevamente el mismo
+
+
+
+
+Hacer Logout
+Cuando le de click a Logout, forzar la expiración del token, lo cual va a redireccionarme al logout de Spotify
+En otro caso, hacer que el token no expire, que se renueve como hacía originalmente
+
+

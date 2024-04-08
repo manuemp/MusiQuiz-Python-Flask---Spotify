@@ -1,0 +1,60 @@
+a:hover{
+    color: white !important;
+    text-shadow: 1.5px 1px dodgerblue;
+    transition: 0.5s;
+}
+
+.navbar-brand{
+    font-size: 16px !important;
+}
+
+.navbar-toggler{
+    border: none !important;
+}
+
+.title{
+    text-align: center;
+    color: white;
+    padding: 20px;
+    margin-top: 0px;
+}
+
+.yellowpink{
+    color: yellow;
+    text-shadow: 2px 2px hotpink;
+}
+
+#imp-link{
+    text-decoration: none;
+    color: red;
+    font-weight: bold;
+}
+
+#logout-link{
+    color: slategray;
+    position: absolute;
+    right: 80px;
+    top: 8px;
+}
+
+#stats-link{
+    color: gold;
+    position: absolute;
+    right: 10px;
+    top: 8px;
+}
+
+@media (max-width: 425px){
+    .info-div{
+        font-size: 5vw;
+    }
+    .stats-txt{
+        font-size: 4.5vw;
+    }
+    .navbar-toggler{
+        margin-left: -16px;
+    }
+    form.container {
+        margin-bottom: 8vw;
+    }
+}

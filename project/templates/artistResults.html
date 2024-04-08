@@ -1,0 +1,101 @@
+{% extends "layout.html" %}
+{% block title %}Quiz Answers{% endblock %}
+{% block bodyid %}results{% endblock %}
+{% block content %}
+    <h2 style="text-align: center;">Results</h2>
+    <br>
+    <table class="results-table">
+        <tr>
+            <td colspan="2" class="yellowpink"><h3>Your Accuracy Rate in {{ sql_data[0][6] }} Quizes:</h3></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div class="progress">
+                    <div class="progress-bar bg-success progress-bar-animated" role="progressbar"  aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ sql_data[0][5] }}%</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h1 class="yellowpink">ArtistQuiz Results</h1>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h4>How many users follow {{ results_titles_dict.name }}?</h4>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="item answer" id="answer1">{{ correct_answers.q1 }}</div></td>
+            <td><div class="item answer" id="user_answer1">{{ user_answers.q1 }}</div></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h4>Which is the artist's most popular song nowadays?</h4>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="item answer" id="answer2">{{ correct_answers.q2 }}</div></td>
+            <td><div class="item answer" id="user_answer2">{{ user_answers.q2 }}</div></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h4>When was '{{results_titles_dict.q3}}' released?</h4>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="item answer" id="answer3">{{ correct_answers.q3 }}</div></td>
+            <td><div class="item answer" id="user_answer3">{{ user_answers.q3 }}</div></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h4>How many tracks does '{{results_titles_dict.q4}}' have?</h4>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="item answer" id="answer7">{{ correct_answers.q4  }}</div></td>
+            <td><div class="item answer" id="user_answer7">{{ user_answers.q4 }}</div></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h4>Which song is from '{{results_titles_dict.q5}}'?</h4>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="item answer" id="answer4">{{ correct_answers.q5 }}</div></td>
+            <td><div class="item answer" id="user_answer4">{{ user_answers.q5 }}</div></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h4>From which album is '{{results_titles_dict.q6}}'?</h4>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="item answer" id="answer5">{{ correct_answers.q6 }}</div></td>
+            <td><div class="item answer" id="user_answer5">{{ user_answers.q6 }}</div></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h4>From which album is '{{results_titles_dict.q7}}'?</h4>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="item answer" id="answer6">{{ correct_answers.q7  }}</div></td>
+            <td><div class="item answer" id="user_answer6">{{ user_answers.q7 }}</div></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h4>Who has more followers?</h4>
+            </td>
+        </tr>
+        <tr>
+            <td><div class="item answer" id="answer8">{{ correct_answers.q8  }}</div></td>
+            <td><div class="item answer" id="user_answer8">{{ user_answers.q8 }}</div></td>
+        </tr>
+    </table>
+    <br><br><br>
+
+{% endblock %}
+{% block script %}
+<script src="{{url_for('static', filename='script.js')}}"></script>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block title %}Listeners Quiz{% endblock %}
+{% block content %}
+    <br>
+    <h2 class="title" style="color: yellow;
+    text-shadow: 2px 1px 0px coral;">Monthly Listeners Quiz</h2>
+    <h3 class="title" style="color: hotpink; text-shadow: 2px 1px deeppink;">Select for each group the artist <br> with more monthly listeners -in Spotify-</h3>
+    <div class="search-info" style="color: hotpink">
+        Information provided by kworb.net
+    </div>
+
+    <form action="/listenersQuiz" method="post">
+        <div class="quiz-div listeners">
+            <span class="quiz-span">1</span>
+            {% for album in trivia_dicts[0].options %}
+            <div class="item">
+                <input type="radio" value="{{ album[0] }}" name="radio1" id="{{ album[0] }}" required>
+                <label for="{{ album[0] }}">{{ album[0] }}</label>
+            </div>
+            {% endfor %}
+        </div>
+    
+        <div class="quiz-div listeners">
+            <span class="quiz-span">2</span>
+            {% for album in trivia_dicts[1].options %}
+            <div class="item">
+                <input type="radio" value="{{ album[0] }}" name="radio2" id="{{ album[0] }}" required>
+                <label for="{{ album[0] }}">{{ album[0] }}</label>
+            </div>
+            {% endfor %}
+        </div>
+    
+        <div class="quiz-div listeners">
+            <span class="quiz-span">3</span>
+            {% for album in trivia_dicts[2].options %}
+            <div class="item">
+                <input type="radio" value="{{ album[0] }}" name="radio3" id="{{ album[0] }}" required>
+                <label for="{{ album[0] }}">{{ album[0] }}</label>
+            </div>
+            {% endfor %}
+        </div>
+    
+        <div class="quiz-div listeners">
+            <span class="quiz-span">4</span>
+            {% for album in trivia_dicts[3].options %}
+            <div class="item">
+                <input type="radio" value="{{ album[0] }}" name="radio4" id="{{ album[0] }}" required>
+                <label for="{{ album[0] }}">{{ album[0] }}</label>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="quiz-div listeners">
+            <span class="quiz-span">5</span>
+            {% for album in trivia_dicts[4].options %}
+            <div class="item">
+                <input type="radio" value="{{ album[0] }}" name="radio5" id="{{ album[0] }}" required>
+                <label for="{{ album[0] }}">{{ album[0] }}</label>
+            </div>
+            {% endfor %}
+        </div>
+        <button class="item-submit">Submit</button>
+        <br><br><br>
+    </form>
+
+{% endblock %}

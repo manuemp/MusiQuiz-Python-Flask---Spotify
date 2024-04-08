@@ -1,0 +1,5 @@
+MusiQuiz es una aplicación de Quiz de música utilizando la API de Spotify.
+
+Spotify no otorga permisos de utilización abierta de la API para hacer juegos, por lo tanto solamente puede jugarse en modo de prueba. Esto implica que solo pueden obtenerse las preguntas del Quiz si el login se hace con mi usuario y contraseña de Spotify, por ser las credenciales que están vinculadas a mi cuenta Developer en Spotify.
+
+Por esto dejo un video de cómo debería funcionar la aplicación una vez que ya se realizó el login con mi cuenta de Spotify
