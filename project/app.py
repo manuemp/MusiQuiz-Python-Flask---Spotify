@@ -19,18 +19,18 @@ app.config['SESSION_COOKIE_NAME'] = 'App Cookie'
 #################################################################
 
 def get_token():
-    # Buscar la cookie token_info, si no se encuentra retornar None
+    # Search for the token_info cookie, if not found return None
     token_info = session.get("token_info", None)
 
     if not token_info:
         raise "Token not found!"
     
     now = time.time()
-    # Si la sesión está por expirar
+    # If session is about to expire
     is_expired = token_info['expires_at'] - now < 60
     
     if is_expired:
-        # Crear oauth y refresh access token
+        # Create an oauth and refresh access token
         sp_oauth = create_spotify_oauth()
         token_info = sp_oauth.refresh_access_token(token_info["refresh_token"])
 
@@ -67,7 +67,6 @@ def get_quiz_results(dict1, dict2, len):
             array[1] += 1
     return array
 
-#
 def sql_submit(username, id, correct_answers, wrong_answers, total_questions, db):
         
         database = sqlite3.connect("quiz.db")
@@ -104,33 +103,33 @@ def sql_submit(username, id, correct_answers, wrong_answers, total_questions, db
 
 
 #################################################################
-#DICTS GLOBALES
+#GLOBAL DICTS
 #################################################################
           
-# DICT PARA RESPUESTAS DEL USUARIO
+# DICT FOR QUIZ ANSWERS
 correct_answers = {}
-# DICT PARA RESULTADOS DE ArtistQuiz
+# DICT FOR ArtistQuiz RESULTS
 results_titles_dict = {}
 
 #################################################################
-#RUTAS
+#ROUTES
 #################################################################
 
 
 @app.route("/redirect")
 def redirectPage():
 
-    # Por cada vez que se use la API, se necesita autorización
+    # Each time the API is used, authorization is needed
     sp_oauth = create_spotify_oauth()
     session.clear() 
     code = request.args.get("code")
-    # token_info va a contener el access_token
+    # token_info will contain the access token
     token_info = sp_oauth.get_access_token(code)
     session["token_info"] = token_info
 
     return redirect(url_for("search", _external= True))
 
-#Redireccionar al login de Spotify
+
 @app.route("/login")
 def login():
     sp_oauth = create_spotify_oauth()
@@ -149,7 +148,7 @@ def index():
 
     return redirect("/search")   
 
-#Logout redirecciona al logout de Spotify, para cerrar la sesión correctamente
+
 @app.route("/logout")
 def logout():
     session.clear()
@@ -186,7 +185,6 @@ def stats():
     database = sqlite3.connect("quiz.db")
     cur = database.cursor()
 
-    #Obtener los stats para todos los Quiz
     artistquiz = list(cur.execute("SELECT * FROM artistQuiz WHERE id = ?", (user_id,)).fetchall())
     listenersquiz = list(cur.execute("SELECT * FROM listenersQuiz WHERE id = ?", (user_id,)).fetchall())
     streamsquiz = list(cur.execute("SELECT * FROM streamsQuiz WHERE id = ?", (user_id,)).fetchall())
@@ -213,7 +211,7 @@ def info():
 
 @app.route("/artistQuiz", methods=["GET", "POST"])
 def artistQuiz():
-    # Chequear que el token no esté expirado
+    # Check if token is not expired
     try:
         token_info = get_token()
     except:
@@ -227,15 +225,15 @@ def artistQuiz():
         length = len(album) - 1
         return album["items"][random.randint(0,length)]["name"]
     
-    # No permitir acceder directamente desde url
+    # Not allow to enter directly from URL
     if request.method == "GET":
         return redirect("/search")
 
-    # Reiniciar el diccionario de respuestas correctas y obtener el access token para permitir la conexión con la API de Spotify
+    # Clear the global correct_answers dict and get access Token to allow connection to Spotify API
     correct_answers.clear()
     sp = spotipy.Spotify(auth=token_info['access_token'])
 
-    # Obtener data de la API
+    # Get data from API
     try:
         searched_artist = request.form.get("search_artist")
         artist = sp.search(searched_artist, type="artist", limit= 1)
@@ -249,8 +247,8 @@ def artistQuiz():
         follows = artist["artists"]["items"][0]["followers"]["total"]
 
 
-        # Obtener una lista solamente con álbumes, evitando compilaciones, singles,
-        # o duplicados entre álbumes y compilaciones
+        # Get a list with albums only, avoiding compilations, singles, EP's
+        # or duplications (sometimes there are)
         album_list = []
         for i in range(0, len(albums["items"])):
             flag = 0
@@ -264,67 +262,70 @@ def artistQuiz():
                 else:
                     continue
 
-        # Si la lista de albumes del artista no tiene más de 4 items, retornar
+        # If the album list does not have at least 4 albums, redirect
         if len(album_list) < 4:
             return render_template("error.html"), {"Refresh": "4; /search"}
 
-        # Pregunta 1
-        # 'follows' es la variable que contiene la cantidad correcta de seguidores,
-        # luego se generan 3 opciones aleatorias
+        # Question 1
+        # 'follows' is the variable with the correct amount of followers, then 3 random options
+        # are created
         
         followers = [follows, random.randint(int(follows * 0.5), int(follows * 1.5)), 
                 random.randint(int(follows * 0.5), int(follows * 1.5)),
                 random.randint(int(follows * 0.5), int(follows * 1.5))
                 ]
-        # Altero el orden de las opciones para que no sea siempre el mismo en cada partida
-        # evitando que el juego se haga predecible
+        # Alter order
         random.shuffle(followers)
 
-        # Pregunta 2
+        # All the 'random.shuffle()' lines will alter randomly the order of the array with
+        # the options for each question, to put the correct question in a different place 
+        # each attempt, making the quiz not predictable 
+
+        # Question 2
         top_songs = []
-        # Obtener el top 4 de canciones según la API de Spotify
+        # Get the top 4 songs according to the API
         for i in range(0, 4):
             top_songs.append(songs["tracks"][i]["name"])
-        # Alterar el orden
+        # Alter order
         random.shuffle(top_songs)
         
-        # Crear array de álbumes para las preguntas
+        # Get random indexes for questions.
         album_indexes_1 = get_rand_array(len(album_list) - 1, 4)
         album_indexes_2 = get_rand_array(len(album_list) - 1, 4)
         
-        # Un array de diccionarios para cada pregunta
+        # An array of dicts for each question
         questions_dict = []
 
-        # Pregunta 3
+        #Question 3
         questions_dict.append({
                 "name" : album_list[album_indexes_1[0]]["name"], 
                 "year" : album_list[album_indexes_1[0]]["release_date"][:4],
                 "img"  : album_list[album_indexes_1[0]]["images"][0]["url"] 
             })
 
-        # Pregunta 4
+        #Question 4
         questions_dict.append({
                 "name" : album_list[album_indexes_1[1]]["name"], 
                 "total_tracks" : album_list[album_indexes_1[1]]["total_tracks"],
                 "img"  : album_list[album_indexes_1[1]]["images"][0]["url"] 
         })
 
-        # Pregunta 5
+        # Question 5
         rand_tracks = []
-        # Ya que album_indexes se llena aleatoriamente y no puede predecirse
-        # la respuesta correcta se guarda manualmente en la variable "answer_track"
-        # que en este caso estará en el índice 2 del array.
+        # Since the numbers in album_indexes are random and cannot be predicted, 
+        # the answer track has to be set manually in a variable (answer_track), 
+        # which in this case will be the array's [2] index 
         answer_track = get_random_tracks(album_list[album_indexes_1[2]]["id"])
         rand_tracks.append(answer_track)
         
-        # Para el resto de los álbumes en el array, obtengo una canción al azar por cada uno
+        # For the rest of the albums in the array, get a random track of each one
         for i in album_indexes_1:
-            # Evito el índice 2 para no obtener dos canciones del mismo álbum en la pregunta
+            # Avoid [2] index, else you're getting another random track for the same album
             if i == album_indexes_1[2]:
                 continue
             track = get_random_tracks(album_list[i]["id"])
             rand_tracks.append(track)
-        # Altero el orden
+        # Alter order
         random.shuffle(rand_tracks)
 
         questions_dict.append({
@@ -333,7 +334,7 @@ def artistQuiz():
                 "tracks" : rand_tracks
         })
 
-        # Pregunta 4
+        # Question 4
         questions_dict.append({
                 "name" : album_list[album_indexes_1[3]]["name"],
                 "img"  : album_list[album_indexes_1[3]]["images"][0]["url"],
@@ -342,7 +343,7 @@ def artistQuiz():
                             album_list[album_indexes_1[2]]["name"], album_list[album_indexes_1[3]]["name"]]
         })
 
-        # Pregunta 5
+        # Question 5
         questions_dict.append({
                 "name" : album_list[album_indexes_2[0]]["name"],
                 "track" : get_random_tracks(album_list[album_indexes_2[0]]["id"]),
@@ -350,7 +351,7 @@ def artistQuiz():
                             album_list[album_indexes_2[2]]["name"], album_list[album_indexes_2[3]]["name"]]
         })
 
-        # Obtener uno de los 3 artistas relacionados que brinda la API
+        # Get one of the first 3 related artists
         related_artist = sp.artist_related_artists(artist_id=id_artist)
         related_indx = random.randint(0, 3)
         related_dict = {
@@ -358,10 +359,10 @@ def artistQuiz():
             "id" :  related_artist["artists"][related_indx]["id"],
             "followers" : related_artist["artists"][related_indx]["followers"]["total"]
         }
-        # Verificar si el artista relacionado tiene más seguidores que el artista de la pregunta
+        # Check if the original aritst or the related artist has more followers
         answer_related = name if int(follows) > int(related_dict["followers"]) else related_dict["name"] 
 
-        # LLENO UNO DE LOS DICCIONAROIS CON LAS PREGUNTAS
+        # SET QUESTIONS IN GLOBAL DICT
         results_titles_dict["name"] = name
         results_titles_dict["q3"] = questions_dict[0]["name"]
         results_titles_dict["q4"] = questions_dict[1]["name"]
@@ -369,7 +370,7 @@ def artistQuiz():
         results_titles_dict["q6"] = questions_dict[3]["track"]
         results_titles_dict["q7"] = questions_dict[4]["track"]
 
-        # LLENO EL OTRO DICCIONARIO CON LAS RESPUESTAS CORRECTAS
+        # SET CORRECT ANSWERS IN THE GLOBAL DICT
         correct_answers["q1"] = follows
         correct_answers["q2"] = top_song
         correct_answers["q3"] = questions_dict[0]["year"]
@@ -382,7 +383,7 @@ def artistQuiz():
         random.shuffle(questions_dict[3]["albums"])
         random.shuffle(questions_dict[4]["albums"])
 
-    # Si hay un error, el artista no existe o no tiene la cantidad necesaria de álbumes
+    # In case there is an error (non existing artist or not enough albums)
     except:
         return render_template("error.html"), {"Refresh": "4; /search"}
         
@@ -421,8 +422,6 @@ def artistResults():
     return render_template("artistResults.html", correct_answers=correct_answers, user_answers=user_answers, sql_data=sql_data, results_titles_dict=results_titles_dict)
 
 
-# StreamsQuiz y ListenersQuiz obtienen sus datos de otra página que no es Spotify
-# ya que la API no brinda la cantidad de seguidores o reproducciones mensuales de cada artista
 @app.route("/streamsQuiz", methods=["GET", "POST"])
 def streamsQuiz():
 
@@ -440,22 +439,22 @@ def streamsQuiz():
         correct_answers.clear()
         headers = {'Content-type': 'charset=utf-8'}
 
-        # CORS no está permitido en esta página, por lo que no se pueden hacer peticiones Ajax.
-        # Obtener el HTML de la página y filtrarlo con regex fue la solución
+        # Because CORS was not allowed on this page, Ajax petitions could not be done.
+        # Getting the page's HTML and filtering it with regex was my solution to get the data
         r = requests.get("https://kworb.net/spotify/artists.html", headers=headers, stream=True)
         r = r.iter_lines()
-        # Ya que iter_lines() retorna byes, casteo el string a Byte para evitar usar
-        # múltiples veces la función str() en cada iteración
+        # Since iter lines returns bytes, string must be a byte to avoid using
+        # multiple times the str() function on each iteration
         string = b""
 
-        # Convierto los bytes del iter_object en fragmentos de string para aplicar la expresión regular
+        # Translate iter_object bytes into fragments of string to apply the regex
         for i in r:
             string += i
         reg = """html">([\d\w\s]*)<\/a><\/div><\/td><td>(\d*,*\d*,\d*,\d*)<\/td>"""
 
-
-        # Busco matches:
-        # La expresión regular está agrupada, por lo que se puede matchear en diferentes variables (artist, count)
+        # Search for matches: 
+        # Regex is grouped, therefore matches can be assigned 
+        # in different variables (artist, count)
         response_array = []
         for artist, count in re.findall(reg, str(string, 'utf-8')):
             response_array.append((artist, count))
@@ -489,12 +488,12 @@ def streamsQuiz():
             }
         ]
 
-        # Obtener el nombre del artista más escuchado de cada grupo y marcarlo como la respuesta correcta
+        # Get name of each group's most listened artist and set as correct answer
         for i in range(0, 5):
             correct = get_max_counter(trivia_dicts[i]["options"])
             correct_answers[f"q{i+1}"] = trivia_dicts[i]["options"][correct][0]
 
-        # Alterar el orden de las opciones
+        # Alter order of all the options arrays
         for i in range(0, 4):
             random.shuffle(trivia_dicts[i]["options"])
 
@@ -599,7 +598,7 @@ def listenersQuiz():
         return render_template("streamQuizResults.html", correct_answers=correct_answers, user_answers=user_answers, sql_data=sql_data, quizname=quizname)
 
 
-# Autorización de Spotify para usar la API
+# Spotify authorization to use API
 def create_spotify_oauth():
     return SpotifyOAuth(
         client_id="3474a9b8fa164aeaa5cea66d44a16818",
